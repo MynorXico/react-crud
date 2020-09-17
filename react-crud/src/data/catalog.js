@@ -62,6 +62,5 @@ const catalog = [{ "id": 1, "artist": "Maisey", "duration": "9:09 PM", "date_add
 { "id": 61, "artist": "Michelina", "duration": "12:04 AM", "date_added": "7/18/2020", "date_modified": "4/17/2020", "title": "Girl 6", "composition_date": "3/15/2020", "created_by": "Michelina Othick", "description": "Displ oblique fx shaft of unsp fibula, 7thG", "image": "http://dummyimage.com/161x113.bmp/dddddd/000000" },
 { "id": 62, "artist": "Pembroke", "duration": "1:09 PM", "date_added": "2/5/2020", "date_modified": "10/1/2019", "title": "Thousand Months, A (Mille mois)", "composition_date": "5/31/2020", "created_by": "Pembroke Malarkey", "description": "Solitary bone cyst, right shoulder", "image": "http://dummyimage.com/164x242.jpg/cc0000/ffffff" },
 { "id": 63, "artist": "Karoline", "duration": "12:19 PM", "date_added": "4/8/2020", "date_modified": "2/18/2020", "title": "Night Tide", "composition_date": "3/22/2020", "created_by": "Karoline Graber", "description": "Open bite of left cheek and temporomandibular area, subs", "image": "http://dummyimage.com/230x222.png/ff4444/ffffff" },
-{ "id": 64, "artist": "Wendel", "duration": "8:06 PM", "date_added": "1/19/2020", "date_modified": "12/17/2019", "title": "Typhoon (Tae-poong)", "composition_date": "12/11/2019", "created_by": "Wendel Ianni", "description": "Occup of hv veh inj pk-up truck, pk-up/van in traf, sequela", "image": "http://dummyimage.com/189x156.png/ff4444/ffffff" }]
-
+]
 export default catalog;

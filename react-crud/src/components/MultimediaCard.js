@@ -47,12 +47,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard(item) {
+export default function Multimedia(item) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
-    //setExpanded(!expanded);
   };
 
   return (
@@ -60,12 +59,13 @@ export default function RecipeReviewCard(item) {
       <CardHeader
         avatar={
           <Tooltip title={item.created_by}>
-            <Avatar aria-label="recipe" className={classes.avatar}>
+            <Avatar aria-label="recipe" className={classes.avatar} style={{ background: '#5cb85c' }}>
               {item.created_by[0]}
             </Avatar>
           </Tooltip>
 
         }
+        
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
@@ -90,6 +90,9 @@ export default function RecipeReviewCard(item) {
         </IconButton>
         <IconButton aria-label="share">
           <EditIcon />
+        </IconButton>
+        <IconButton aria-label="share">
+          <FavoriteIcon />
         </IconButton>
         <Checkbox
           className={clsx(classes.expand, {

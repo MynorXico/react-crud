@@ -21,7 +21,7 @@ class App extends Component {
     return (
       <div className="App">
         <ButtonAppBar></ButtonAppBar>
-        <Container></Container>
+        {this.props.children}
         <Footer></Footer>
       </div>
     );

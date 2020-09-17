@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
-      width: 'auto',
+      width: '75%',
     },
   },
   searchIcon: {
@@ -54,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
+    textAlign: 'left',
+    display: "block"
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -148,7 +150,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar style={{ background: '#5cb85c' }} position="static">
         <Toolbar>
           <IconButton
             edge="start"
@@ -159,7 +161,7 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Sheet Music Catalog
+            Music Sheet Catalog
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
