@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Multimedia(item) {
+export default function Multimedia({item, handleCheck}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -88,7 +88,9 @@ export default function Multimedia(item) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton 
+          aria-label="share"
+          >
           <EditIcon />
         </IconButton>
         <IconButton aria-label="share">
@@ -98,7 +100,7 @@ export default function Multimedia(item) {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={() => handleCheck(item)}
           aria-expanded={expanded}
           aria-label="show more"
           color="primary"

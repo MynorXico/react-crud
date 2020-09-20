@@ -24,14 +24,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SimpleContainer() {
+export default function SimpleContainer({ handleCheck }) {
     const classes = useStyles();
 
     function FormRow(data) {
         return (
             <React.Fragment>
                 {data.map(item => {
-                    return MultimediaCard(item); // <MultimediaCard item={item} ></MultimediaCard>
+                    return <MultimediaCard 
+                        item={item}
+                        handleCheck={handleCheck}
+                        ></MultimediaCard>
                 })}
             </React.Fragment>
         );
@@ -40,9 +43,9 @@ export default function SimpleContainer() {
 
     var rows = [];
     var current_row = [];
-    for(var i = 0; i < data.length; i++){
+    for (var i = 0; i < data.length; i++) {
         current_row.push(data[i])
-        if(current_row.length == 3 || data.length-i-1 == 0){
+        if (current_row.length == 3 || data.length - i - 1 == 0) {
             rows.push(current_row);
             current_row = []
         }
@@ -58,13 +61,13 @@ export default function SimpleContainer() {
                 <Grid container spacing={1}>
                     {
                         rows.map(row => {
-                            return  (<Grid container item xs={12} spacing={3}>
-                                        {FormRow(row)}
-                                    </Grid>)
+                            return (<Grid container item xs={12} spacing={3}>
+                                {FormRow(row)}
+                            </Grid>)
                         })
                     }
                 </Grid>
-                <Pagination count={11} defaultPage={6} color="primary" style={{display: "block ruby"}} />
+                <Pagination count={11} defaultPage={6} color="primary" style={{ display: "block ruby" }} />
             </div>
         </React.Fragment>
     );

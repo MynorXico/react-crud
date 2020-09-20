@@ -7,17 +7,17 @@ import ButtonAppBar from "./components/HeaderComponent"
 import Container from "./components/Container"
 import Footer from "./components/Footer"
 
-
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = { redirect: null }
   }
 
 
 
 
   render() {
-
+    
     return (
       <div className="App">
         <ButtonAppBar></ButtonAppBar>

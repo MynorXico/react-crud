@@ -14,6 +14,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { Link } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -160,9 +161,12 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Music Sheet Catalog
+          <Link to="/"
+            style={{ textDecoration: 'none'}}>
+            <Typography className={classes.title} variant="h6" noWrap>
+              Music Sheet Catalog
           </Typography>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
