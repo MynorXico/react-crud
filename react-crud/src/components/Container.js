@@ -24,22 +24,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SimpleContainer({ handleCheck }) {
+export default function SimpleContainer({ handleCheck, sheets }) {
     const classes = useStyles();
 
     function FormRow(data) {
+
         return (
             <React.Fragment>
                 {data.map(item => {
                     return <MultimediaCard 
                         item={item}
                         handleCheck={handleCheck}
+                        key={item.id}
                         ></MultimediaCard>
                 })}
             </React.Fragment>
         );
     }
-    var data = catalog
+    var data = sheets
 
     var rows = [];
     var current_row = [];
@@ -50,7 +52,6 @@ export default function SimpleContainer({ handleCheck }) {
             current_row = []
         }
     }
-    console.log("rows: ", rows)
     return (
         <React.Fragment>
             <CssBaseline />

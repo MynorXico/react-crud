@@ -53,7 +53,6 @@ export default function Multimedia({item, handleCheck}) {
 
   const handleExpandClick = () => {
   };
-
   return (
     <Card className={classes.root}>
       <CardHeader

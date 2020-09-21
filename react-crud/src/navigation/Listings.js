@@ -12,9 +12,14 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import Tooltip from '@material-ui/core/Tooltip';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { Link } from "react-router";
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import * as sheetActions from '../actions/sheetActions';
 
 class Listings extends Component {
   constructor(props) {
@@ -24,11 +29,11 @@ class Listings extends Component {
     }
   }
 
-
+  componentDidMount() {
+    this.props.sheetActions.fetchSheets();
+  }
 
   handleCheck = (item) => {
-    console.log("CHecking: ", item);
-    console.log("Before checks: ", this.state.selected);
     let { selected } = this.state;
     if (selected.includes(item.id)) {
       let position = selected.indexOf(item.id);
@@ -36,17 +41,25 @@ class Listings extends Component {
     } else {
       selected.push(item.id)
     }
-    console.log("Pushing: ", { selected });
     this.setState({ selected });
 
     console.log("After checks: ", this.state.selected);
   }
 
   render() {
-
+    const { sheets, isFetching } = this.props;
+    if (isFetching) {
+      return <>
+        <LinearProgress color="primary" /></>
+    }
     return (
       <div className="App">
-        <Container handleCheck={this.handleCheck}></Container>
+        <Container
+          handleCheck={this.handleCheck}
+          sheets={sheets}
+          isFetching={isFetching}
+
+        ></Container>
         <BottomNavigation style={{
           position: 'fixed',
           bottom: 0,
@@ -69,4 +82,19 @@ class Listings extends Component {
     );
   }
 }
-export default Listings;
+
+function mapStateToProps({ sheet }) {
+  return {
+    sheets: sheet.sheets,
+    isFetching: sheet.isFetching
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    sheetActions: bindActionCreators(sheetActions, dispatch)
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Listings);
