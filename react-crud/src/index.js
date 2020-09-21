@@ -12,6 +12,13 @@ import configureStore from './store/configureStore';
 
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 
+const NoMatchPage = () => {
+  console.log("test");
+  return (
+    <h3>404 - Not found</h3>
+  )
+}
+
 const store = configureStore();
 ReactDOM.render((
   <Provider store={store}>
@@ -20,7 +27,11 @@ ReactDOM.render((
         <IndexRoute component={Listings} />
         <Route path="home" component={Listings} />
         <Route path="create" component={Create} />
+        <Route path="edit/:id" component={Create} />
+        <Route path="*" component={NoMatchPage}></Route>
       </Route>
+      <Route component={NoMatchPage}></Route>
+
     </Router>
   </Provider>
 ), document.getElementById('root'));

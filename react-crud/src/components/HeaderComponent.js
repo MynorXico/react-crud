@@ -15,6 +15,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from "react-router";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -83,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ sheets }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -152,7 +154,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar style={{ background: '#5cb85c' }} position="static">
+      <AppBar style={{ background: '#5cb85c', paddingTop: "10px" }} position="static">
         <Toolbar>
           <IconButton
             edge="start"
@@ -163,23 +165,30 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Link to="/"
-            style={{ textDecoration: 'none'}}>
+            style={{ textDecoration: 'none' }}>
             <Typography className={classes.title} variant="h6" noWrap>
               Music Sheet Catalog
           </Typography>
           </Link>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
+
+            <Autocomplete
+              autoComplete
+              id="autocompletion-combo-box"
+              options={sheets}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => <TextField {...params} label={<SearchIcon />} variant='outlined'
+              />}
+
+            ></Autocomplete>
+            {/* <InputBase
               placeholder="Buscar..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-            />
+            /> */}
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

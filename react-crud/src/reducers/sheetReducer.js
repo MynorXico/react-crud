@@ -1,22 +1,72 @@
 import initialState from './initialState';
-import { FETCH_SHEETS, RECEIVE_SHEETS } from "../actions/actionTypes";
+import {
+    FETCH_SHEETS,
+    RECEIVE_SHEETS,
+    START_DELETING_SHEETS,
+    FINISH_DELETING_SHEETS,
+    START_CREATING_SHEET,
+    FINISH_CREATING_SHEET,
+    START_FETCHING_SHEET,
+    FINISH_FETCHING_SHEET,
+    START_UPDATING_SHEET,
+    FINISH_UPDATING_SHEET,
+} from "../actions/actionTypes";
 
-export default function sheet(state = initialState.sheet, action){
+export default function sheet(state = initialState.sheet, action) {
     console.log("Reducing action: ", action);
-    switch(action.type){
+    switch (action.type) {
         case FETCH_SHEETS:
-            console.log('FETCH_SHEETS Action')
             return {
                 ...state,
                 isFetching: true
             };
         case RECEIVE_SHEETS:
-            console.log('RECEIVE_SHEETS Action');
             return {
                 ...state,
                 sheets: action.sheets,
                 isFetching: false
             };
+        case START_DELETING_SHEETS:
+            return {
+                ...state,
+                isDeleting: true
+            };
+        case FINISH_DELETING_SHEETS:
+            return {
+                ...state,
+                isDeleting: false
+            }
+        case START_CREATING_SHEET:
+            return {
+                ...state,
+                isCreating: true
+            }
+        case FINISH_CREATING_SHEET:
+            return {
+                ...state,
+                isCreating: false
+            }
+        case START_FETCHING_SHEET:
+            return {
+                ...state,
+                isFetching: true
+            }
+        case FINISH_FETCHING_SHEET:
+            return {
+                ...state,
+                isFetching: false,
+                sheet: action.sheet
+            }
+        case START_UPDATING_SHEET:
+            return {
+                ...state,
+                isUpdating: true
+            }
+        case FINISH_UPDATING_SHEET:
+            return {
+                ...state,
+                isUpdating: false
+            }
         default:
             return state;
     }

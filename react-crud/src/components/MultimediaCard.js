@@ -19,6 +19,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Link } from "react-router";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Multimedia({item, handleCheck}) {
+export default function Multimedia({ item, handleCheck }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -64,7 +65,7 @@ export default function Multimedia({item, handleCheck}) {
           </Tooltip>
 
         }
-        
+
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
@@ -87,11 +88,14 @@ export default function Multimedia({item, handleCheck}) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton 
-          aria-label="share"
+        <Link
+          to={`edit/${item.id}`}>
+          <IconButton
+            aria-label="edit"
           >
-          <EditIcon />
-        </IconButton>
+            <EditIcon />
+          </IconButton>
+        </Link>
         <IconButton aria-label="share">
           <FavoriteIcon />
         </IconButton>

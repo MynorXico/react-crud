@@ -18,6 +18,7 @@ import { Link } from "react-router";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as sheetActions from '../actions/sheetActions';
 
@@ -29,8 +30,11 @@ class Listings extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.sheetActions.fetchSheets();
+
+  _removeSheets() {
+    const { selected } = this.state;
+    this.props.sheetActions.deleteSheets(selected);
+    this.setState({ selected: [] })
   }
 
   handleCheck = (item) => {
@@ -42,18 +46,13 @@ class Listings extends Component {
       selected.push(item.id)
     }
     this.setState({ selected });
-
-    console.log("After checks: ", this.state.selected);
   }
 
   render() {
-    const { sheets, isFetching } = this.props;
-    if (isFetching) {
-      return <>
-        <LinearProgress color="primary" /></>
-    }
+    const { sheets, isFetching, isDeleting } = this.props;
     return (
       <div className="App">
+        {isFetching ? <><LinearProgress color="primary" /></> : null}
         <Container
           handleCheck={this.handleCheck}
           sheets={sheets}
@@ -66,16 +65,22 @@ class Listings extends Component {
           width: "100%"
         }}
           onChange={(event, newValue) => {
-
+            switch (newValue) {
+              case 1:
+                if (!isDeleting)
+                  this._removeSheets();
+                break;
+            }
           }}>
           <Link to="/create">
-            <BottomNavigationAction label="Agregar" icon={<AddIcon color="primary" value="add" />}>
-            </BottomNavigationAction>
+            <BottomNavigationAction label="Agregar" icon={<AddIcon color="primary" value="add" />} />
           </Link>
-          <BottomNavigationAction label="Eliminar" icon={<DeleteIcon color="secondary" value="remove" />}>
-
-
-          </BottomNavigationAction>
+          <BottomNavigationAction
+            label="Eliminar"
+            icon={isDeleting ?
+              <CircularProgress color="secondary" disableShrink size={20} /> :
+              <DeleteIcon color="secondary" value="remove" />}
+          />
 
         </BottomNavigation>
       </div>
@@ -86,7 +91,8 @@ class Listings extends Component {
 function mapStateToProps({ sheet }) {
   return {
     sheets: sheet.sheets,
-    isFetching: sheet.isFetching
+    isFetching: sheet.isFetching,
+    isDeleting: sheet.isDeleting
   }
 }
 

@@ -61,8 +61,8 @@ export default function SimpleContainer({ handleCheck, sheets }) {
             }}>
                 <Grid container spacing={1}>
                     {
-                        rows.map(row => {
-                            return (<Grid container item xs={12} spacing={3}>
+                        rows.map((row, index) => {
+                            return (<Grid container key={index} item xs={12} spacing={3}>
                                 {FormRow(row)}
                             </Grid>)
                         })
