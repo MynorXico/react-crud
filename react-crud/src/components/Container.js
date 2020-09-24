@@ -68,7 +68,7 @@ export default function SimpleContainer({ handleCheck, sheets }) {
                         })
                     }
                 </Grid>
-                <Pagination count={11} defaultPage={6} color="primary" style={{ display: "block ruby" }} />
+                {/* <Pagination count={11} defaultPage={6} color="primary" style={{ display: "block ruby" }} /> */}
             </div>
         </React.Fragment>
     );

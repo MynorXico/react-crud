@@ -20,6 +20,7 @@ class Create extends Component {
   constructor(props) {
     super(props);
     this.sheet_id = this.props.params.id;
+    
     this.state = {
 
     }
@@ -30,9 +31,23 @@ class Create extends Component {
     this._handleRedirect = this._handleRedirect.bind(this);
   }
 
+  componentDidUpdate(prevProps){
+    if(prevProps.sheet != this.props.sheet && this.props.sheet != null){
+      this.setState({
+        ...this.props.sheet
+      }, () => console.log("New state: ", this.state));
+    }
+    if(this.props.isCreating != prevProps.isCreating && !this.props.isCreating){
+      this._handleRedirect();
+    }
+    if(this.props.isUpdating != prevProps.isUpdating && !this.props.isUpdating){
+      this._handleRedirect();
+    }
+  }
+
   componentDidMount() {
     if (this.sheet_id != null) {
-      this.props.sheetActions.fetchSheet(this.sheet_id);
+      this.props.sheetActions.fetchSheet(this.sheet_id)
     }
   }
 
@@ -54,12 +69,13 @@ class Create extends Component {
     })
   }
 
-  async _createSheet() {
-    await this.props.sheetActions.createSheet(this.state);
+  _createSheet() {
+    this.props.sheetActions.createSheet(this.state);
   }
 
-  async _updateSheet() {
-    await this.props.sheetActions.updateSheet(this.sheet_id, this.state);
+  _updateSheet() {
+    console.log("Curent sate: ", this.state, this.sheet_id);
+    this.props.sheetActions.updateSheet(this.state, this.sheet_id);
   }
 
   // const [values, setValues] = React.useState({
@@ -71,6 +87,7 @@ class Create extends Component {
   }
 
   _handleRedirect = () => {
+    console.log("Redirecting: ");
     const { router } = this.props;
     router.push('/');
   }
@@ -101,7 +118,9 @@ function mapStateToProps({ sheet }) {
   return {
     isLoading: sheet.isCreating || sheet.isUpdating,
     isFetching: sheet.isFetching,
-    sheet: sheet.sheet
+    sheet: sheet.sheet,
+    isCreating: sheet.isCreating,
+    isUpdating: sheet.isUpdating
   }
 }
 

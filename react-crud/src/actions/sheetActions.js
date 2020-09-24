@@ -7,7 +7,7 @@ import * as SongService from '../services/SongsWorker';
 
 
 export function fetchSheets() {
-    return dispatch => {
+    return async dispatch => {
         dispatch({ type: types.FETCH_SHEETS })
         return SongService.getSheets()
             .then(sheets => dispatch({ type: types.RECEIVE_SHEETS, sheets }));
@@ -43,6 +43,7 @@ export function updateSheet(sheet_data, sheet_id){
         dispatch({
             type: types.START_UPDATING_SHEET
         });
+        console.log("Sheet data at sheetActions", sheet_data, sheet_id);
         await SongService.updateSheet(sheet_data, sheet_id)
             .then(response => dispatch({type: types.FINISH_UPDATING_SHEET}))
     }

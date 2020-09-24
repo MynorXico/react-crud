@@ -110,13 +110,13 @@ export default function CreationForm({
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={async () => {
+                    onClick={() => {
                         if (sheet) {
-                            await updateSheet();
-                            handleRedirect();
+                            updateSheet();
+                            //handleRedirect();
                         } else {
-                            await createSheet()
-                            handleRedirect();
+                            createSheet()
+                            //handleRedirect();
                         }
 
                     }}

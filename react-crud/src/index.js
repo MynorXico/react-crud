@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import Create from "./navigation/Create";
 import Listings from "./navigation/Listings";
+import Login from "./navigation/Login";
+
 import { Provider } from 'react-redux'
 
 import * as serviceWorker from './serviceWorker';
@@ -28,6 +30,7 @@ ReactDOM.render((
         <Route path="home" component={Listings} />
         <Route path="create" component={Create} />
         <Route path="edit/:id" component={Create} />
+        <Route path="login" component={Login} />
         <Route path="*" component={NoMatchPage}></Route>
       </Route>
       <Route component={NoMatchPage}></Route>

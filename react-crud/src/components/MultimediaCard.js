@@ -60,7 +60,7 @@ export default function Multimedia({ item, handleCheck }) {
         avatar={
           <Tooltip title={item.created_by}>
             <Avatar aria-label="recipe" className={classes.avatar} style={{ background: '#5cb85c' }}>
-              {item.created_by[0]}
+              {item.created_by}
             </Avatar>
           </Tooltip>
 
