@@ -16,10 +16,17 @@ class App extends Component {
     this.state = {}
   }
 
-  componentDidMount() {
-    this.props.sheetActions.fetchSheets();
-  }
 
+  componentDidUpdate(prevProps){
+    console.log("notAuthorized: ", prevProps.notAuthorized, this.props.notAuthorized);
+    console.log(prevProps.notAuthorized);
+    console.log(prevProps.notAuthorized != this.props.notAuthorized);
+    if(this.props.notAuthorized && prevProps.notAuthorized != this.props.notAuthorized){
+      const { router } = this.props;
+      console.log("Redirect");
+      router.push('login');
+    }
+  }
 
   render() {
     const { sheets } = this.props;
@@ -34,9 +41,10 @@ class App extends Component {
 }
 
 function mapStateToProps({ sheet }) {
-  const { sheets } = sheet;
+  const { sheets, notAuthorized } = sheet;
   return {
-    sheets
+    sheets,
+    notAuthorized
   };
 }
 
