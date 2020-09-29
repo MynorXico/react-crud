@@ -4,26 +4,15 @@ import axios from 'axios';
 
 import catalog from "../data/catalog";
 
-const base_url = 'https://lzg6a5ir6i.execute-api.us-east-1.amazonaws.com/desa/api';
+const base_url = 'https://lzg6a5ir6i.execute-api.us-east-1.amazonaws.com/dev/api';
 
-const token = localStorage.getItem('jwt');
-axios.defaults.headers.common['Authorization'] = `${token}`
-console.log("Fijando token: ", token);
+axios.defaults.headers.common['Authorization'] = getToken();
 
+function getToken() {
+    return localStorage.getItem('jwt');
+}
 export const getSheets = () => {
     return new Promise(async (resolve, reject) => {
-        // await new Promise(r => setTimeout(r, 0))
-        //     .then(() => {
-        //         //resolve(catalog);
-        //         resolve(catalog.map((sheet) => {
-        //             return new Sheet(sheet);
-        //         }))
-        //     })
-        //     .catch((err) => {
-        //         console.log(`Error at getting sheets`, err);
-        //         reject(err);
-        //     });
-
         await axios.get(base_url + "/")
             .then(({ status, data }) => {
                 resolve(data.map((sheet) => {
@@ -31,8 +20,8 @@ export const getSheets = () => {
                 }));
             })
             .catch((err) => {
-                console.log(`Error at getting sheets`, err);
-                reject(err);
+                console.log(`Error at getting sheets`, err.response);
+                reject(err.response.status);
             })
     })
 }
@@ -49,6 +38,7 @@ export const getSheet = (sheet_id) => {
                 console.log(`Error at getting sheet ${sheet_id}`);
                 //reject(err);
                 //resolve(new Sheet(catalog[0]));
+                reject(err.response.status);
             })
     })
 }
@@ -81,6 +71,7 @@ export const deleteSheet = (sheet_ids) => {
             }).
             catch((err) => {
                 console.log(`Error at deleting sheet ${sheet_ids}`, err.response);
+                reject(err.response.status);
             })
     })
 }
@@ -106,7 +97,7 @@ export const createSheet = (sheet_data) => {
             }).
             catch((err) => {
                 console.log(`Error at creating sheet: `, sheet_data, err);
-                reject(err);
+                reject(err.response.status);
             })
     })
 }
@@ -134,7 +125,7 @@ export const updateSheet = (sheet_data, sheet_id) => {
             catch((err) => {
                 console.log(`Error at updating sheet: `, sheet_data);
                 console.log(err.response);
-                reject(err);
+                reject(err.response.status);
             });
     })
 }

@@ -20,7 +20,6 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.sheet_id = this.props.params.id;
-    console.log("Props: ", this.props.location.hash.split('&'));
     var hash_url_params = this.props.location.hash.split('&');
     var id_token = hash_url_params.find(x => x.includes('id_token'));
     var id_token_split = [];
@@ -36,13 +35,12 @@ class Login extends Component {
 
   }
 
-  componentDidMount() {
-    console.log("Token: ", this.id_token);
+  async componentDidMount() {
     const { router } = this.props;
     if(this.id_token == null){
         // Redirigir a login
         console.log("Hay que redirigir");
-        router.push('https://prograweb.auth.us-east-1.amazoncognito.com/login?client_id=tni2l4ed1ds21pkf0vp1k8im5&response_type=token&scope=email+openid&redirect_uri=https://www.test.com/login');
+        window.location.href='https://prograweb.auth.us-east-1.amazoncognito.com/login?client_id=tni2l4ed1ds21pkf0vp1k8im5&response_type=token&scope=email+openid&redirect_uri=https://d26m5oyvq96l0u.cloudfront.net/login'
     }else{
         localStorage.setItem('jwt', this.id_token)
         router.push('/');

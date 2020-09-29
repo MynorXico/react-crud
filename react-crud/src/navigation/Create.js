@@ -49,6 +49,8 @@ class Create extends Component {
     if (this.sheet_id != null) {
       this.props.sheetActions.fetchSheet(this.sheet_id)
     }
+    this.props.sheetActions.fetchSheets();
+
   }
 
   _handleInputChange(event) {

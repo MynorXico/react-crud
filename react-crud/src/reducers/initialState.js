@@ -5,6 +5,7 @@ export default {
         isDeleting: false,
         isCreating: false,
         idUpdating: false,
-        sheet:      null
+        sheet:      null,
+        notAuthorized: false,
     }
 }

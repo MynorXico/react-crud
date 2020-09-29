@@ -10,6 +10,7 @@ import {
     FINISH_FETCHING_SHEET,
     START_UPDATING_SHEET,
     FINISH_UPDATING_SHEET,
+    UNAUTHORIZED_SHEET
 } from "../actions/actionTypes";
 
 export default function sheet(state = initialState.sheet, action) {
@@ -66,6 +67,11 @@ export default function sheet(state = initialState.sheet, action) {
             return {
                 ...state,
                 isUpdating: false
+            }
+        case UNAUTHORIZED_SHEET:
+            return {
+                ...state,
+                notAuthorized: true
             }
         default:
             return state;

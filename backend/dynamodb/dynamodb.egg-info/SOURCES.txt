@@ -1,0 +1,11 @@
+README.md
+setup.py
+dynamodb/__init__.py
+dynamodb/dynamo_functions.py
+dynamodb.egg-info/PKG-INFO
+dynamodb.egg-info/SOURCES.txt
+dynamodb.egg-info/dependency_links.txt
+dynamodb.egg-info/requires.txt
+dynamodb.egg-info/top_level.txt
+tests/__init__.py
+tests/test_dynamo_functions.py

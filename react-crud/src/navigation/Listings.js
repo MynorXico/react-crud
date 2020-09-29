@@ -30,7 +30,9 @@ class Listings extends Component {
     }
   }
 
-
+  componentDidMount() {
+    this.props.sheetActions.fetchSheets();
+  }
   _removeSheets() {
     const { selected } = this.state;
     this.props.sheetActions.deleteSheets(selected);
