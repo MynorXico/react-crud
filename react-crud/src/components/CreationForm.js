@@ -27,7 +27,8 @@ export default function CreationForm({
     buttonText,
     isFetching,
     sheet,
-    updateSheet
+    updateSheet,
+    filename
 }) {
     const classes = useStyles();
     if (isFetching) {
@@ -87,13 +88,39 @@ export default function CreationForm({
                 />
                 <TextField
                     id="image"
-                    label="Image URI"
+                    label="PDF File"
                     type="text"
                     autoComplete="current-password"
-                    style={{ width: "80%" }}
-                    onChange={handleInputChange}
-                    defaultValue={sheet && sheet.image}
+                    style={{ width: "73%" }}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    defaultValue={!filename ? (sheet && sheet.image):''}
+                    disabled={true}
+                    value={filename}
                 />
+                <label htmlFor="upload_photo" >
+                    <input
+                        style={{ display: 'none' }}
+                        id="upload_photo"
+                        name="upload_photo"
+                        type="file"
+                        onChange={(event) => {
+                            handleInputChange(event);
+                            const formData = new FormData();
+                            formData.append(
+                                'test',
+                                event.target.files[0],
+                                event.target.files[0].name
+                            )
+                            console.log("Form data: ", event.target.files[0])
+                        }}
+                    />
+                    <Button color="secondary" variant="contained" component="span">
+                        Upload file
+                    </Button>
+
+                </label>
                 <TextField
                     required
                     id="description"

@@ -7,5 +7,9 @@ dynamodb.egg-info/SOURCES.txt
 dynamodb.egg-info/dependency_links.txt
 dynamodb.egg-info/requires.txt
 dynamodb.egg-info/top_level.txt
+dynamodb/handler/__init__.py
+dynamodb/handler/user.py
+dynamodb/model/__init__.py
+dynamodb/model/sheet.py
 tests/__init__.py
 tests/test_dynamo_functions.py

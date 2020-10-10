@@ -13,7 +13,8 @@ export class Sheet {
             composition_date,
             image,
             description,
-            tempo
+            tempo,
+            upload_photo
         } = post;
         this.description = description;
         this.image = image;
@@ -33,5 +34,6 @@ export class Sheet {
         this.href = href;
         this.created_by = created_by;
         this.tempo = tempo;
+        this.upload_photo = upload_photo;
     }
 }

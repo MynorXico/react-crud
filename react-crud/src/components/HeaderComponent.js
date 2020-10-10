@@ -121,7 +121,9 @@ export default function PrimarySearchAppBar({ sheets }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <Link to="/logout">
+        <MenuItem>Logout</MenuItem>
+      </Link>
     </Menu>
   );
 

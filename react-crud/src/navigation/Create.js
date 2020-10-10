@@ -3,9 +3,6 @@ import logo from '../logo.svg';
 import '../App.css';
 
 import PropTypes from "prop-types";
-import ButtonAppBar from "../components/HeaderComponent"
-import Container from "../components/Container"
-import Footer from "../components/Footer"
 import CreationForm from "../components/CreationForm"
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,9 +17,9 @@ class Create extends Component {
   constructor(props) {
     super(props);
     this.sheet_id = this.props.params.id;
-    
-    this.state = {
 
+    this.state = {
+      filename: null
     }
 
     this._handleInputChange = this._handleInputChange.bind(this);
@@ -31,16 +28,16 @@ class Create extends Component {
     this._handleRedirect = this._handleRedirect.bind(this);
   }
 
-  componentDidUpdate(prevProps){
-    if(prevProps.sheet != this.props.sheet && this.props.sheet != null){
+  componentDidUpdate(prevProps) {
+    if (prevProps.sheet != this.props.sheet && this.props.sheet != null) {
       this.setState({
         ...this.props.sheet
       }, () => console.log("New state: ", this.state));
     }
-    if(this.props.isCreating != prevProps.isCreating && !this.props.isCreating){
+    if (this.props.isCreating != prevProps.isCreating && !this.props.isCreating) {
       this._handleRedirect();
     }
-    if(this.props.isUpdating != prevProps.isUpdating && !this.props.isUpdating){
+    if (this.props.isUpdating != prevProps.isUpdating && !this.props.isUpdating) {
       this._handleRedirect();
     }
   }
@@ -53,22 +50,63 @@ class Create extends Component {
 
   }
 
+  _getBase64(file, cb) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      cb(reader.result.split(',')[1])
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+  }
+
   _handleInputChange(event) {
     const target = event.target;
     var value = '';
     var name = '';
     if (target) {
-      value = target.type === 'checkbox' ? target.checked : target.value;
       name = target.id;
+
+      if (target.type == 'checkbox') {
+        value = target.checked
+      } else if (target.type == 'file') {
+        const formData = new FormData();
+        formData.append(
+          'test',
+          target.files[0],
+          event.target.files[0].name
+        )
+        this.setState({
+          filename: event.target.files[0].name
+        })
+        this._getBase64(event.target.files[0], (data) => { 
+          this.setState({
+            [name]: data,
+          })
+        })
+        let reader = new FileReader();
+        reader.readAsDataURL(target.files[0]);
+        value = reader.result;
+        console.log("File base64: ", value);
+        value = formData
+        console.log(value);
+      }
+      else {
+        value = target.value
+      }
     } else {
       value = event;
       name = 'duration';
     }
 
+    if (target.type != 'file') {
+      // Si es archivo la llamada se realiza arriba de manera asíncrona
+      this.setState({
+        [name]: value
+      })
+    }
 
-    this.setState({
-      [name]: value
-    })
   }
 
   _createSheet() {
@@ -108,6 +146,7 @@ class Create extends Component {
           buttonText={sheet ? 'Update' : 'Create'}
           sheet={sheet}
           updateSheet={this._updateSheet}
+          filename={this.state.filename}
         ></CreationForm>
       </div>
     );

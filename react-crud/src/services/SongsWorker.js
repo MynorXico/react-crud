@@ -92,7 +92,8 @@ export const createSheet = (sheet_data) => {
         //     });
 
         await axios.post(base_url + "/", new Sheet(sheet_data))
-            .then(({ status, data }) => {
+            .then(( data ) => {
+                console.log("Create data: ", data);
                 resolve(data);
             }).
             catch((err) => {

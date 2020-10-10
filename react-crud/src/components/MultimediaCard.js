@@ -20,7 +20,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from "react-router";
-
+import { Document, Page } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,9 +52,18 @@ const useStyles = makeStyles((theme) => ({
 export default function Multimedia({ item, handleCheck }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [numPages, setNumPages] = React.useState(null);
+  const [pageNumber, setPageNumber] = React.useState(1);
 
   const handleExpandClick = () => {
   };
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+
+  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -74,11 +84,17 @@ export default function Multimedia({ item, handleCheck }) {
         title={item.title}
         subheader={item.composition_date}
       />
-      <CardMedia
-        className={classes.media}
-        image={item.image}
-        title="Paella dish"
-      />
+      <div style={{
+        width: "100%",
+        alignItems: "center"
+        
+      }}>
+        <Document file={{ url: item.image}}
+        >
+          <Page pageNumber={1} width="500" height="500" scale={1}
+          />
+        </Document>
+      </div>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {item.description}
