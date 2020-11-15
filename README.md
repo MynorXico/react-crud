@@ -1,1 +1,3 @@
+![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiVUgxeCtCQVRRN2ZZUDJhTnJ5dk9XNnh5Ulh3bVVVd2VzQXBORkFJS1dVSkd3ZlJ3b01aVnNSdmtwN1kxOHpCSjhUbmx3OWozOFFOZXd6bnc2VnZ4b1VrPSIsIml2UGFyYW1ldGVyU3BlYyI6InR5NEFkSWlMRm8zbndtT08iLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
 # react-crud
