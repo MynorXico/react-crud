@@ -1,12 +1,19 @@
 import uuid
 from datetime import datetime
 class Sheet(object):
-    def __init__(self, db_client, s3_client):
+    def __init__(self, db_client, s3_client, redis_client):
         self._db_client = db_client
         self._s3_client = s3_client
+        self._redis_client = redis_client
     
     def get(self, user_id):
-        return self._db_client.get('Sheet', user_id)
+        memoized = self._redis_client._get(user_id)
+        if(memoized != None):
+            return memoized
+        
+        value = self._db_client.get('Sheet', user_id)
+        self._redis_client._set(user_id, value)
+        return value
 
     def set_data(self, data):
         self._data = {
@@ -29,6 +36,7 @@ class Sheet(object):
         }
         print("dynamodb/models/sheet.py#set_data - Set data")
         print(self._data)
+        return self._data
 
     def save(self):
         filename = "pdf/%s.pdf"%str(uuid.uuid1())

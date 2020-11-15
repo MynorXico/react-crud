@@ -5,33 +5,38 @@ from datetime import datetime
 import base64
 
 
-
-# Incluir configuraciones de s3
-Configs.config={
-    's3_bucket_name': 'd26m5oyvq96l0u.cloudfront.net'
-}
-
 sheet_model = Models.sheet
 
 
 def fetch(event):
     id = None
+    if type(event) is not dict:
+        return responseLambda(422, json.dumps("Not valid format: "+str(id)))
+
+    if not ('requestContext' in event.keys() and
+            'authorizer' in event['requestContext'].keys() and
+            'claims' in event['requestContext']['authorizer'].keys() and
+            'cognito:username'):
+        return responseLambda(403, {'message': 'Not authorized'})
+
     if 'multiValueQueryStringParameters' in event.keys() and event['multiValueQueryStringParameters'] != None:
         if 'id' in event['multiValueQueryStringParameters'].keys():
             id = event['multiValueQueryStringParameters']['id'][0]
 
     user_id = event['requestContext']['authorizer']['claims']['cognito:username']
-    try:
-        response = (sheet_model.get(user_id))
-        if(id != None):
-            for sheet in response:
-                if(sheet['id'] == id):
-                    return responseLambda(200, json.dumps(sheet))
-            return responseLambda(404, json.dumps("Not Found: "+str(id)))
-        return responseLambda(200, json.dumps(response))
-    except:
-        raise
-
+    print("Trying")
+    response = (Models.sheet.get(user_id))
+    print("response: ")
+    print(response)
+    if(id != None):
+        for sheet in response:
+            print("comparing")
+            print(sheet['id'])
+            print(id)
+            if(sheet['id'] == id):
+                return responseLambda(200, json.dumps(sheet))
+        return responseLambda(404, json.dumps("Not Found: "+str(id)))
+    return responseLambda(200, json.dumps(response))
 
 def create(event):
     try:
@@ -47,47 +52,48 @@ def create(event):
     print(data)
     sheet_model.set_data(data)
     
-    try:
-        response = (sheet_model.save())
-        return responseLambda(200, event['body'])
-    except:
-        raise
-        #return responseLambda(200, json.dumps(event))
+    sheet_model.save()
+    return responseLambda(200, event['body'])
 
 def update(event):
-    try:
-        json.loads(str(event['body']))
-    except ValueError:
-        return responseLambda(400, json.dumps("JSON no válido"))
+    if type(event) is not dict:
+        return responseLambda(422, json.dumps("Not valid format: "+str(id)))
+
+    if not ('body' in event.keys()):
+        return responseLambda(422, json.dumps("Not valid format: "+str(id)))
     
+    #if type(event['body']) is not dict:
+    #    return responseLambda(422, json.dumps("Not valid format: "+str(id)))
+    try:
+        json.loads(event['body'])
+    except ValueError:
+        return responseLambda(422, json.dumps("Not valid format: "+str(id)))
     data = json.loads(event['body'])
     data['date_modified'] = str(datetime.now())
 
     sheet_model.set_data(data)
 
-    try:
-        response = sheet_model.update()
-        return responseLambda(200, event['body'])
-        #response = dynamo_functions.update_sheet(buildSheet(data))
-    except:
-        raise
+    return responseLambda(200, event['body'])
 
 def delete(event):
-    try:
-        params = (event['queryStringParameters'])
-    except:
+    if type(event) is not dict:
+        return responseLambda(422, json.dumps("Not valid format: "+str(id)))
+
+    if not ('queryStringParameters' in event.keys() and isinstance(event['queryStringParameters'], dict)):
         return responseLambda(400, json.dumps("Params no válido"))
+    
+    params = (event['queryStringParameters'])
 
     ids = []
 
     for item in params:
+        print("params")
+        print(params)
+        print(item)
         ids.append(params[item])
 
-    try:
-        response = sheet_model.delete(ids)
-        return responseLambda(200, json.dumps(response))
-    except:
-        return responseLambda(400, json.dumps(event))
+    response = sheet_model.delete(ids)
+    return responseLambda(200, json.dumps(response))
 # Función genérica para HTTP Response
 def responseLambda(statusCode, data):
     return {
