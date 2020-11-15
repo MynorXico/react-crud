@@ -1,0 +1,14 @@
+phases:
+  pre_build:
+    commands:
+      - apt-get install -y yarn
+      - cd react-crud
+  build:
+    commands:
+      - yarn build
+  post_build:
+    commands:
+      - aws s3 cp --recursive --acl public-read ./build s3://d26m5oyvq96l0u.cloudfront.net/ 
+artifacts:
+  files:
+    - target/messageUtil-1.0.jar
