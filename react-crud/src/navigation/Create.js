@@ -47,7 +47,6 @@ class Create extends Component {
       this.props.sheetActions.fetchSheet(this.sheet_id)
     }
     this.props.sheetActions.fetchSheets();
-
   }
 
   _getBase64(file, cb) {
@@ -158,7 +157,7 @@ function mapStateToProps({ sheet }) {
 
   return {
     isLoading: sheet.isCreating || sheet.isUpdating,
-    isFetching: sheet.isFetching,
+    isFetching: sheet.isFetchingSheet,
     sheet: sheet.sheet,
     isCreating: sheet.isCreating,
     isUpdating: sheet.isUpdating

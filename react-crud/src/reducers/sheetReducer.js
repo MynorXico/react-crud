@@ -50,12 +50,12 @@ export default function sheet(state = initialState.sheet, action) {
         case START_FETCHING_SHEET:
             return {
                 ...state,
-                isFetching: true
+                isFetchingSheet: true
             }
         case FINISH_FETCHING_SHEET:
             return {
                 ...state,
-                isFetching: false,
+                isFetchingSheet: false,
                 sheet: action.sheet
             }
         case START_UPDATING_SHEET:

@@ -32,18 +32,13 @@ class Login extends Component {
         id_token = null;
     }
     this.id_token = id_token;
-
-  }
-
-  async componentDidMount() {
     const { router } = this.props;
-    if(this.id_token == null){
+    if(id_token == null){
         // Redirigir a login
-        console.log("Hay que redirigir");
         window.location.href='https://prograweb.auth.us-east-1.amazoncognito.com/login?client_id=tni2l4ed1ds21pkf0vp1k8im5&response_type=token&scope=email+openid&redirect_uri=https://d26m5oyvq96l0u.cloudfront.net/login'
     }else{
         localStorage.setItem('jwt', this.id_token)
-        router.push('/');
+        window.location.href = '/'
     }
   }
 

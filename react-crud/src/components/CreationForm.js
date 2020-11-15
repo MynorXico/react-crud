@@ -34,13 +34,12 @@ export default function CreationForm({
     if (isFetching) {
         return <></>
     }
-    console.log(sheet && sheet.duration);
+    console.log("Sheet: ", isFetching, sheet);
     return (
         <form className={classes.root} autoComplete="off" style={{ marginBottom: "20%", marginTop: "50px" }}>
             <Typography style={{ width: "80%", textAlign: "left", marginLeft: "10%" }} variant="h5" align="left">New Music Sheet</Typography>
             <div >
                 <TextField
-                    error
                     required
                     id="title"
                     label="Title"
