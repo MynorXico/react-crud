@@ -1,12 +1,12 @@
 export default {
     sheet: {
         sheets: [],
-        isFetching: true,
+        isFetching: false,
         isDeleting: false,
         isCreating: false,
         idUpdating: false,
         sheet:      null,
         notAuthorized: false,
-        isFetchingSheet: true,
+        isFetchingSheet: false,
     }
 }
