@@ -7,6 +7,7 @@ phases:
       - cd react-crud
   build:
     commands:
+      - yarn
       - yarn build
   post_build:
     commands:
