@@ -28,7 +28,8 @@ export default function CreationForm({
     isFetching,
     sheet,
     updateSheet,
-    filename
+    filename,
+    errors
 }) {
     const classes = useStyles();
     if (isFetching) {
@@ -46,6 +47,8 @@ export default function CreationForm({
                     style={{ width: "80%" }}
                     onChange={handleInputChange}
                     defaultValue={sheet && sheet.title}
+                    error={errors['title']}
+                    helperText={errors['title']}
                 />
                 <TextField
                     name="artist"
@@ -55,6 +58,8 @@ export default function CreationForm({
                     style={{ width: "80%" }}
                     onChange={handleInputChange}
                     defaultValue={sheet && sheet.artist}
+                    error={errors['artist']}
+                    helperText={errors['artist']}
                 />
                 <TextField
                     required
@@ -63,6 +68,8 @@ export default function CreationForm({
                     style={{ width: "80%" }}
                     onChange={handleInputChange}
                     defaultValue={sheet && sheet.signature}
+                    error={errors['signature']}
+                    helperText={errors['signature']}
                 />
                 <TextField
                     required
@@ -72,7 +79,10 @@ export default function CreationForm({
                     type="number"
                     onChange={handleInputChange}
                     defaultValue={sheet && sheet.tempo}
-                />
+                    error={errors['tempo']}
+                    helperText={errors['tempo']}
+
+                    />
                 <TextField
                     required
                     id="composition_date"
@@ -84,6 +94,8 @@ export default function CreationForm({
                     }}
                     onChange={handleInputChange}
                     defaultValue={sheet && sheet.composition_date}
+                    error={errors['composition_date']}
+                    helperText={errors['composition_date']}
                 />
                 <TextField
                     id="image"
@@ -97,6 +109,9 @@ export default function CreationForm({
                     defaultValue={!filename ? (sheet && sheet.image):''}
                     disabled={true}
                     value={filename}
+                    error={errors['image']}
+                    helperText={errors['image']}
+
                 />
                 <label htmlFor="upload_photo" >
                     <input
@@ -114,6 +129,9 @@ export default function CreationForm({
                             )
                             console.log("Form data: ", event.target.files[0])
                         }}
+                        error={errors['upload_photo']}
+                        helperText={errors['upload_photo']}
+
                     />
                     <Button color="secondary" variant="contained" component="span">
                         Upload file
@@ -129,6 +147,8 @@ export default function CreationForm({
                     rows={5}
                     onChange={handleInputChange}
                     defaultValue={sheet && sheet.description}
+                    error={errors['description']}
+                    helperText={errors['description']}
                 />
 
             </div>

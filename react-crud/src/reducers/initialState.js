@@ -8,5 +8,6 @@ export default {
         sheet:      null,
         notAuthorized: false,
         isFetchingSheet: false,
+        errors: {}
     }
 }

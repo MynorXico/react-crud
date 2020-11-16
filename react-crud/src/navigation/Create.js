@@ -41,12 +41,14 @@ class Create extends Component {
       this._handleRedirect();
     }
   }
-
-  componentDidMount() {
-    if (this.sheet_id != null) {
+  componentWillMount() {
+    if (this.sheet_id) {
       this.props.sheetActions.fetchSheet(this.sheet_id)
+      this.create = false;
     } else {
-      
+      this.props.sheetActions.clearSheet()
+      this.sheet = null;
+      this.create = true;
     }
     this.props.sheetActions.fetchSheets();
   }
@@ -133,11 +135,12 @@ class Create extends Component {
     router.push('/');
   }
   render() {
-    const { isLoading, sheet, isFetching } = this.props;
+    const { isLoading, sheet, isFetching, errors } = this.props;
+    console.log("Will create: ", this.create ? null:sheet);
     return (
       <div className="App">
         {isFetching ? <><LinearProgress color="primary" /></> : null}
-        <CreationForm
+        <CreationForm 
           params={this.props}
           handleInputChange={this._handleInputChange}
           createSheet={this._createSheet}
@@ -145,9 +148,10 @@ class Create extends Component {
           isLoading={isLoading}
           isFetching={isFetching}
           buttonText={sheet ? 'Update' : 'Create'}
-          sheet={sheet}
+          sheet={this.create ? null:sheet}
           updateSheet={this._updateSheet}
           filename={this.state.filename}
+          errors={errors}
         ></CreationForm>
       </div>
     );
@@ -162,7 +166,8 @@ function mapStateToProps({ sheet }) {
     isFetching: sheet.isFetchingSheet,
     sheet: sheet.sheet,
     isCreating: sheet.isCreating,
-    isUpdating: sheet.isUpdating
+    isUpdating: sheet.isUpdating,
+    errors: sheet.errors
   }
 }
 
