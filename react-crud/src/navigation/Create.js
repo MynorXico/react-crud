@@ -45,6 +45,8 @@ class Create extends Component {
   componentDidMount() {
     if (this.sheet_id != null) {
       this.props.sheetActions.fetchSheet(this.sheet_id)
+    } else {
+      
     }
     this.props.sheetActions.fetchSheets();
   }

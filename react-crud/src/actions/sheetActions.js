@@ -19,6 +19,11 @@ export function fetchSheets() {
     }
 }
 
+export function clearSheet() {
+    return async dispatch => {
+        dispatch({ type: types.CLEAR_SHEET });
+    }
+}
 export function deleteSheets(sheet_ids) {
     return async dispatch => {
         dispatch({

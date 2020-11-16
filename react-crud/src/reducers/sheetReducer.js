@@ -10,12 +10,18 @@ import {
     FINISH_FETCHING_SHEET,
     START_UPDATING_SHEET,
     FINISH_UPDATING_SHEET,
-    UNAUTHORIZED_SHEET
+    UNAUTHORIZED_SHEET,
+    CLEAR_SHEET
 } from "../actions/actionTypes";
 
 export default function sheet(state = initialState.sheet, action) {
     console.log("Reducing action: ", action);
     switch (action.type) {
+        case CLEAR_SHEET:
+            return {
+                ...state,
+                sheet: null
+            }
         case FETCH_SHEETS:
             return {
                 ...state,
