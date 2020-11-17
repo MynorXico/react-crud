@@ -17,7 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from "react-router";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-
+import View from 'react'
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -114,14 +114,15 @@ export default function PrimarySearchAppBar({ sheets }) {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       id={menuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
+      getContentAnchorEl={null}
     >
-      <Link to="/logout">
+      <Link to="/logout" style={{textDecorationLine: 'none'}}>
         <MenuItem>Logout</MenuItem>
       </Link>
     </Menu>
@@ -131,48 +132,38 @@ export default function PrimarySearchAppBar({ sheets }) {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      getContentAnchorEl={null}
+
     >
 
 
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <Link to="/logout" style={{textDecorationLine: 'none'}}>
+        <MenuItem>Logout</MenuItem>
+      </Link>
     </Menu>
   );
 
   return (
     <div className={classes.grow}>
       <AppBar style={{ background: '#5cb85c', paddingTop: "10px" }} position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+        <Toolbar style={{flex: 1}}>
+         
+          <div style={{  display: 'contents', textAlign: 'center', width: '75%', }}>
+            <img src="/logo.png" style={{ height: "50px", paddingRight: "100px"}}></img>
+          </div>
           <Link to="/"
             style={{ textDecoration: 'none' }}>
-            <Typography className={classes.title} variant="h6" noWrap>
+            <Typography className={classes.title} variant="h6" noWrap style={{flex: 1}}>
               Music Sheet Catalog
           </Typography>
           </Link>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
 
             <Autocomplete
               autoComplete
@@ -183,15 +174,8 @@ export default function PrimarySearchAppBar({ sheets }) {
               />}
 
             ></Autocomplete>
-            {/* <InputBase
-              placeholder="Buscar..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            /> */}
-          </div>
+
+          </div> */}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton
