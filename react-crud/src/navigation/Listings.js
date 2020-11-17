@@ -28,26 +28,27 @@ class Listings extends Component {
     this.state = {
       selected: []
     }
+    this.selected = []
   }
 
   componentDidMount() {
     this.props.sheetActions.fetchSheets();
   }
   _removeSheets() {
-    const { selected } = this.state;
+    const  selected  = this.selected;
     this.props.sheetActions.deleteSheets(selected);
-    this.setState({ selected: [] })
+    this.selected = [];
   }
 
-  handleCheck = (item) => {
-    let { selected } = this.state;
-    if (selected.includes(item.id)) {
+  _handleCheck = (item) => {
+    let selected = this.selected;
+    if(selected.includes(item.id)){
       let position = selected.indexOf(item.id);
       selected.splice(position, 1);
-    } else {
-      selected.push(item.id)
+    }else {
+      selected.push(item.id);
     }
-    this.setState({ selected });
+    this.selected = selected;
   }
 
   render() {
@@ -56,7 +57,7 @@ class Listings extends Component {
       <div className="App">
         {isFetching ? <><LinearProgress color="primary" /></> : null}
         <Container
-          handleCheck={this.handleCheck}
+          handleCheck={this._handleCheck}
           sheets={sheets}
           isFetching={isFetching}
 

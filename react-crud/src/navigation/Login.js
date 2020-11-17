@@ -48,7 +48,6 @@ class Login extends Component {
   }
 
   _updateSheet() {
-    console.log("Curent sate: ", this.state, this.sheet_id);
     this.props.sheetActions.updateSheet(this.state, this.sheet_id);
   }
 
@@ -61,7 +60,6 @@ class Login extends Component {
   }
 
   _handleRedirect = () => {
-    console.log("Redirecting: ");
     const { router } = this.props;
     router.push('/');
   }

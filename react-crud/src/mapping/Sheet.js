@@ -22,7 +22,6 @@ export class Sheet {
         this.title = title;
         this.id = id;
         this.artist = artist;
-        console.log("Duration model", duration);
         try{
             this.duration = duration //duration.split(' ')[0].padStart(5, 0);
         }catch{

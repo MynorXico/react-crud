@@ -35,7 +35,6 @@ export default function CreationForm({
     if (isFetching) {
         return <></>
     }
-    console.log("Sheet: ", isFetching, sheet);
     return (
         <form className={classes.root} autoComplete="off" style={{ marginBottom: "20%", marginTop: "50px" }}>
             <Typography style={{ width: "80%", textAlign: "left", marginLeft: "10%" }} variant="h5" align="left">New Music Sheet</Typography>
@@ -127,7 +126,6 @@ export default function CreationForm({
                                 event.target.files[0],
                                 event.target.files[0].name
                             )
-                            console.log("Form data: ", event.target.files[0])
                         }}
                         error={errors['upload_photo']}
                         helperText={errors['upload_photo']}

@@ -32,7 +32,7 @@ class Create extends Component {
     if (prevProps.sheet != this.props.sheet && this.props.sheet != null) {
       this.setState({
         ...this.props.sheet
-      }, () => console.log("New state: ", this.state));
+      });
     }
     if (this.props.isCreating != prevProps.isCreating && !this.props.isCreating) {
       this._handleRedirect();
@@ -91,9 +91,7 @@ class Create extends Component {
         let reader = new FileReader();
         reader.readAsDataURL(target.files[0]);
         value = reader.result;
-        console.log("File base64: ", value);
         value = formData
-        console.log(value);
       }
       else {
         value = target.value
@@ -117,7 +115,6 @@ class Create extends Component {
   }
 
   _updateSheet() {
-    console.log("Curent sate: ", this.state, this.sheet_id);
     this.props.sheetActions.updateSheet(this.state, this.sheet_id);
   }
 
@@ -130,13 +127,11 @@ class Create extends Component {
   }
 
   _handleRedirect = () => {
-    console.log("Redirecting: ");
     const { router } = this.props;
     router.push('/');
   }
   render() {
     const { isLoading, sheet, isFetching, errors } = this.props;
-    console.log("Will create: ", this.create ? null:sheet);
     return (
       <div className="App">
         {isFetching ? <><LinearProgress color="primary" /></> : null}
@@ -159,7 +154,6 @@ class Create extends Component {
 }
 
 function mapStateToProps({ sheet }) {
-  console.log("Mapping: ", sheet);
 
   return {
     isLoading: sheet.isCreating || sheet.isUpdating,

@@ -15,7 +15,6 @@ import configureStore from './store/configureStore';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 
 const NoMatchPage = () => {
-  console.log("test");
   return (
     <h3>404 - Not found</h3>
   )

@@ -21,7 +21,6 @@ export function fetchSheets() {
 
 export function clearSheet() {
     return async dispatch => {
-        console.log("Dispatching: ", types.CLEAR_SHEET);
         dispatch({ type: types.CLEAR_SHEET });
     }
 }
@@ -41,7 +40,6 @@ export function deleteSheets(sheet_ids) {
 
 export function createSheet(sheet_data) {
     return async dispatch => {
-        console.log("Sheet data: ", sheet_data);
         var errors = {}
         if(sheet_data['title']=='' || sheet_data['title'] == null){
             errors['title'] = 'Por favor llenar el título'
@@ -81,7 +79,6 @@ export function createSheet(sheet_data) {
 
 export function updateSheet(sheet_data, sheet_id){
     return async dispatch => {
-        console.log("Sheet data: ", sheet_data);
         var errors = {}
         if(sheet_data['title']=='' || sheet_data['title'] == null){
             errors['title'] = 'Por favor llenar el título'
@@ -109,7 +106,6 @@ export function updateSheet(sheet_data, sheet_id){
             dispatch({
                 type: types.START_UPDATING_SHEET
             });
-            console.log("Sheet data at sheetActions", sheet_data, sheet_id);
             await SongService.updateSheet(sheet_data, sheet_id)
                 .then(response => dispatch({type: types.FINISH_UPDATING_SHEET}))
                 .catch(err_code => unauthorize(dispatch, err_code))
