@@ -99,6 +99,19 @@ export default function Multimedia({ item, handleCheck }) {
         <Typography variant="body2" color="textSecondary" component="p">
           {item.description}
         </Typography>
+       
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Composition date: </b> {item.composition_date}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          <b>Composer</b> {item.artist}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+        <b>Signature</b> {item.signature}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+        <b>Tempo</b> {item.tempo}
+        </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="share">
