@@ -22,6 +22,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from "react-router";
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,8 +97,12 @@ export default function Multimedia({ item, handleCheck }) {
       }}>
         <Document file={{ url: item.image}}
         >
-          <Page pageNumber={1} width="500" height="500" scale={1}
-          />
+          <BrowserView>
+            <Page pageNumber={1} width="500" height="500" scale={1} />
+          </BrowserView>
+          <MobileView>
+            <Page pageNumber={1} width="500" height="500" scale={0.65} />
+          </MobileView>
         </Document>
       </div>
       <CardContent>
@@ -114,9 +124,9 @@ export default function Multimedia({ item, handleCheck }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="share">
+        {/* <IconButton aria-label="share">
           <ShareIcon />
-        </IconButton>
+        </IconButton> */}
         <Link
           to={`edit/${item.id}`}>
           <IconButton
@@ -125,9 +135,9 @@ export default function Multimedia({ item, handleCheck }) {
             <EditIcon />
           </IconButton>
         </Link>
-        <IconButton aria-label="share">
+        {/* <IconButton aria-label="share">
           <FavoriteIcon />
-        </IconButton>
+        </IconButton> */}
         <Checkbox
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
