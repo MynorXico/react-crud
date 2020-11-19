@@ -30,6 +30,7 @@ import {
   isBrowser,
   isMobile
 } from "react-device-detect";
+import { FacebookShareButton, FacebookIcon } from "react-share";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -148,9 +149,7 @@ export default function Multimedia({ item, handleCheck }) {
         </IconButton> */}
         <div>
         
-        {/* <IconButton aria-label="share">
-          <FavoriteIcon />
-        </IconButton> */}
+
         <Checkbox
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -168,6 +167,11 @@ export default function Multimedia({ item, handleCheck }) {
             <EditIcon />
           </IconButton>
         </Link>
+        <IconButton>
+        <FacebookShareButton url={item.image} quote={"Look at this!"} className="share">
+          <FacebookIcon size={26} round={true}/>
+        </FacebookShareButton>
+        </IconButton>
         </div>
         <IconButton
           className={clsx(classes.expand, {
