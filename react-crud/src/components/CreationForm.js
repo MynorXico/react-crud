@@ -37,7 +37,7 @@ export default function CreationForm({
     }
     return (
         <form className={classes.root} autoComplete="off" style={{ marginBottom: "20%", marginTop: "50px" }}>
-            <Typography style={{ width: "80%", textAlign: "left", marginLeft: "10%" }} variant="h5" align="left">New Music Sheet</Typography>
+            <Typography style={{ width: "80%", textAlign: "left", marginLeft: "10%" }} variant="h5" align="left">{sheet ? 'Edit' : 'New' } Music Sheet</Typography>
             <div >
                 <TextField
                     required
