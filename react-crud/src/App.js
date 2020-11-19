@@ -30,7 +30,9 @@ class App extends Component {
     return (
       <div className="App" >
         <ButtonAppBar sheets={sheets}></ButtonAppBar>
-        {this.props.children}
+        <div style={{ marginTop: "90px"}}>
+          {this.props.children}
+        </div>
         <Footer></Footer>
       </div>
     );

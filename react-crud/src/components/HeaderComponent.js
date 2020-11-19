@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: 'none',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('xs')]: {
       display: 'block',
     },
     color: "white"
@@ -150,15 +150,15 @@ export default function PrimarySearchAppBar({ sheets }) {
   );
 
   return (
-    <div className={classes.grow}>
+    <div className={classes.grow} style={{position: "fixed", width: "100%", zIndex: "100", top: 0}}>
       <AppBar style={{ background: '#5cb85c', paddingTop: "10px" }} position="static">
         <Toolbar style={{flex: 1}}>
-         
+        <Link to="/" style={{ textDecoration: 'none', paddingRight: "10%" }}>
           <div style={{  display: 'contents', textAlign: 'center', width: '75%', }}>
-            <img src="/logo.png" style={{ height: "50px", paddingRight: "100px"}}></img>
+            <img src="/logo.png" style={{ height: "50px", paddingRight: "10%"}}></img>
           </div>
-          <Link to="/"
-            style={{ textDecoration: 'none' }}>
+          </Link>
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <Typography className={classes.title} variant="h6" noWrap style={{flex: 1}}>
               Music Sheet Catalog
           </Typography>
@@ -197,7 +197,7 @@ export default function PrimarySearchAppBar({ sheets }) {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <AccountCircle />
             </IconButton>
           </div>
         </Toolbar>
