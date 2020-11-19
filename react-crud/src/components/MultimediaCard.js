@@ -101,7 +101,7 @@ export default function Multimedia({ item, handleCheck }) {
             <Page pageNumber={1} width="500" height="500" scale={1} />
           </BrowserView>
           <MobileView>
-            <Page pageNumber={1} width="500" height="500" scale={0.65} />
+            <Page pageNumber={1} width="500" height="500" scale={0.61} />
           </MobileView>
         </Document>
       </div>
