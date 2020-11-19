@@ -64,6 +64,7 @@ export default function Multimedia({ item, handleCheck }) {
   const [numPages, setNumPages] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
 
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -152,10 +153,8 @@ export default function Multimedia({ item, handleCheck }) {
 
         <Checkbox
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
           })}
           onClick={() => handleCheck(item)}
-          aria-expanded={expanded}
           aria-label="show more"
           color="primary"
         ></Checkbox>
