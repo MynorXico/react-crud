@@ -8,6 +8,16 @@ import { Redirect } from "react-router";
 import { BrowserRouter as Route } from "react-router-dom";
 import { TimePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
+import { Document, Page } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
+import {
+    BrowserView,
+    MobileView,
+    isBrowser,
+    isMobile
+} from "react-device-detect";
+import { FormatAlignCenter } from '@material-ui/icons';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+
 
 
 export default function CreationForm({
@@ -35,9 +46,10 @@ export default function CreationForm({
     if (isFetching) {
         return <></>
     }
+    
     return (
         <form className={classes.root} autoComplete="off" style={{ marginBottom: "20%", marginTop: "50px" }}>
-            <Typography style={{ width: "80%", textAlign: "left", marginLeft: "10%" }} variant="h5" align="left">{sheet ? 'Edit' : 'New' } Music Sheet</Typography>
+            <Typography style={{ width: "80%", textAlign: "left", marginLeft: "10%" }} variant="h5" align="left">{sheet ? 'Edit' : 'New'} Music Sheet</Typography>
             <div >
                 <TextField
                     required
@@ -81,7 +93,7 @@ export default function CreationForm({
                     error={errors['tempo']}
                     helperText={errors['tempo']}
 
-                    />
+                />
                 <TextField
                     required
                     id="composition_date"
@@ -105,37 +117,39 @@ export default function CreationForm({
                     InputLabelProps={{
                         shrink: true,
                     }}
-                    defaultValue={!filename ? (sheet && sheet.image):''}
+                    defaultValue={!filename ? (sheet && sheet.image) : ''}
                     disabled={true}
                     value={filename}
                     error={errors['image']}
                     helperText={errors['image']}
 
                 />
-                <label htmlFor="upload_photo" >
-                    <input
-                        style={{ display: 'none' }}
-                        id="upload_photo"
-                        name="upload_photo"
-                        type="file"
-                        onChange={(event) => {
-                            handleInputChange(event);
-                            const formData = new FormData();
-                            formData.append(
-                                'test',
-                                event.target.files[0],
-                                event.target.files[0].name
-                            )
-                        }}
-                        error={errors['upload_photo']}
-                        helperText={errors['upload_photo']}
+                {sheet == null &&
+                    <label htmlFor="upload_photo" >
+                        <input
+                            style={{ display: 'none' }}
+                            id="upload_photo"
+                            name="upload_photo"
+                            type="file"
+                            onChange={(event) => {
+                                handleInputChange(event);
+                                const formData = new FormData();
+                                formData.append(
+                                    'test',
+                                    event.target.files[0],
+                                    event.target.files[0].name
+                                )
+                            }}
+                            error={errors['upload_photo']}
+                            helperText={errors['upload_photo']}
 
-                    />
-                    <Button color="secondary" variant="contained" component="span">
-                        Upload file
-                    </Button>
+                        />
+                        <Button color="secondary" variant="contained" component="span">
+                            Upload file
+                </Button>
 
-                </label>
+                    </label>}
+
                 <TextField
                     required
                     id="description"
@@ -150,6 +164,19 @@ export default function CreationForm({
                 />
 
             </div>
+            {sheet && <div style={{textAlign: 'center'}}>
+                <div style={{display: 'inline-block'}}>
+                <Document file={{ url: sheet && sheet.image }}>
+                    <BrowserView>
+                        <Page pageNumber={1} width="500" height="500" scale={1} />
+                    </BrowserView>
+                    <MobileView>
+                        <Page pageNumber={1} width="500" height="500" scale={0.61} />
+                    </MobileView>
+                </Document>
+                </div>
+            </div>}
+            
             <div style={{ textAlign: "left", width: "80%", paddingLeft: "10%" }}>
                 <Button
                     variant="contained"

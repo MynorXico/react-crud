@@ -13,7 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EditIcon from '@material-ui/icons/Edit';
-
+import Button from '@material-ui/core/Button';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -67,7 +69,24 @@ export default function Multimedia({ item, handleCheck }) {
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
+  function changePage(offset) {
+    setPageNumber(prevPageNumber => {
+      var page = prevPageNumber + offset;
 
+      if(page > numPages){
+        return numPages
+      }else if (page <= 0){
+        return 1
+      }
+      return page
+    });
+  }
+  function previousPage() {
+    changePage(-1);
+  }
+  function nextPage() {
+    changePage(1);
+  }
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
   return (
@@ -95,15 +114,26 @@ export default function Multimedia({ item, handleCheck }) {
         alignItems: "center"
         
       }}>
-        <Document file={{ url: item.image}}
+        <Document file={{ url: item.image}} onLoadSuccess={onDocumentLoadSuccess}
         >
           <BrowserView>
-            <Page pageNumber={1} width="500" height="500" scale={1} />
+            <Page pageNumber={pageNumber} width="500" height="500" scale={1} />
           </BrowserView>
           <MobileView>
-            <Page pageNumber={1} width="500" height="500" scale={0.61} />
+            <Page pageNumber={pageNumber} width="500" height="500" scale={0.61} />
           </MobileView>
         </Document>
+        <div>
+        <p>
+          Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
+        </p>
+        <IconButton color="primary" onClick={previousPage}>
+          <ArrowLeftIcon></ArrowLeftIcon>
+        </IconButton>
+        <IconButton color="primary" onClick={nextPage}>
+          <ArrowRightIcon></ArrowRightIcon>
+        </IconButton>
+      </div>
       </div>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
