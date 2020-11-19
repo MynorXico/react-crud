@@ -35,17 +35,17 @@ class Listings extends Component {
     this.props.sheetActions.fetchSheets();
   }
   _removeSheets() {
-    const  selected  = this.selected;
+    const selected = this.selected;
     this.props.sheetActions.deleteSheets(selected);
     this.selected = [];
   }
 
   _handleCheck = (item) => {
     let selected = this.selected;
-    if(selected.includes(item.id)){
+    if (selected.includes(item.id)) {
       let position = selected.indexOf(item.id);
       selected.splice(position, 1);
-    }else {
+    } else {
       selected.push(item.id);
     }
     this.selected = selected;
@@ -75,9 +75,8 @@ class Listings extends Component {
                 break;
             }
           }}>
-          <Link to="/create">
-            <BottomNavigationAction label="Agregar" icon={<AddIcon color="primary" value="add" />} />
-          </Link>
+          
+            <BottomNavigationAction label="Agregar" icon={<Link to="/create"><AddIcon color="primary" value="add" /></Link>} />
           <BottomNavigationAction
             label="Eliminar"
             icon={isDeleting ?
