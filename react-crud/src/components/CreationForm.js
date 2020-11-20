@@ -127,6 +127,7 @@ export default function CreationForm({
                 {sheet == null &&
                     <label htmlFor="upload_photo" >
                         <input
+                            accept=".pdf"
                             style={{ display: 'none' }}
                             id="upload_photo"
                             name="upload_photo"
@@ -144,7 +145,7 @@ export default function CreationForm({
                             helperText={errors['upload_photo']}
 
                         />
-                        <Button color="secondary" variant="contained" component="span">
+                        <Button color="primary" disabled={isLoading} variant="contained" component="span">
                             Upload file
                 </Button>
 
@@ -179,6 +180,7 @@ export default function CreationForm({
             
             <div style={{ textAlign: "left", width: "80%", paddingLeft: "10%" }}>
                 <Button
+                    disabled={isLoading}
                     variant="contained"
                     color="primary"
                     onClick={() => {
