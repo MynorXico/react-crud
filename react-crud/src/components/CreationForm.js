@@ -124,9 +124,9 @@ export default function CreationForm({
                     helperText={errors['image']}
 
                 />
-                {sheet == null &&
-                    <label htmlFor="upload_photo" >
+                {<label htmlFor="upload_photo" >
                         <input
+                            disabled={isLoading || sheet}
                             accept=".pdf"
                             style={{ display: 'none' }}
                             id="upload_photo"
@@ -145,7 +145,7 @@ export default function CreationForm({
                             helperText={errors['upload_photo']}
 
                         />
-                        <Button color="primary" disabled={isLoading} variant="contained" component="span">
+                        <Button color="primary" disabled={isLoading || sheet} variant="contained" component="span">
                             Upload file
                 </Button>
 
@@ -177,8 +177,8 @@ export default function CreationForm({
                 </Document>
                 </div>
             </div>}
-            <p style={{textAlign: "left", paddingLeft: "10%", fontSize: 12}}>* Es posible que tus cambios se vean reflejados 
-             hasta después de un minuto. Esto sucede con fines demostrativos de caché.
+            <p style={{textAlign: "left", paddingLeft: "10%", paddingRight: "10%", fontSize: 12}}>* Es posible que tus cambios se vean reflejados 
+             hasta después de un minuto. Esto sucede porque utilizamos caché para brindarte una mejor experiencia.
             </p>
             <div style={{ textAlign: "left", width: "80%", paddingLeft: "10%" }}>
                 <Button
