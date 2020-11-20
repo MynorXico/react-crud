@@ -21,6 +21,14 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as sheetActions from '../actions/sheetActions';
+import { Typography } from '@material-ui/core';
+import { withStyles } from "@material-ui/core/styles";
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 class Listings extends Component {
   constructor(props) {
@@ -31,6 +39,7 @@ class Listings extends Component {
     this.selected = []
   }
 
+  
   componentDidMount() {
     this.props.sheetActions.fetchSheets();
   }
@@ -53,19 +62,55 @@ class Listings extends Component {
 
   render() {
     const { sheets, isFetching, isDeleting } = this.props;
+    const image = { uri: "nota-musical.png" };
+    const WhiteTextTypography = withStyles({
+      root: {
+        color: "GREY",
+        fontSize: 45,
+        fontFamily: "aria",
+        fontWeight: "bold",
+        textAlign: "center"
+      }
+    })(Typography);
     return (
       <div className="App">
         {isFetching ? <><LinearProgress color="primary" /></> : null}
-        <Container
+        {sheets.length == 0 && 
+        <>
+          <BrowserView>
+            <img style={{padding: 30, height: "80%"}} src="nota-musical.png" ></img>
+            <div style={{textAlign: "center", width: "100%"}}>
+              <WhiteTextTypography>
+                Your repertoire is still empty :/
+              </WhiteTextTypography>
+            </div>
+          </BrowserView>
+          <MobileView>
+            <img style={{padding: 30, width: "50%"}} src="nota-musical.png" ></img>
+            <div style={{textAlign: "center", width: "100%"}}>
+            <WhiteTextTypography>
+              Your repertoire is still empty :/
+            </WhiteTextTypography>
+          </div>
+            </MobileView>
+          
+        </>}
+        { sheets.length > 0 && 
+        <><Container
           handleCheck={this._handleCheck}
           sheets={sheets}
           isFetching={isFetching}
 
         ></Container>
+        </>
+        }
         <BottomNavigation style={{
           position: 'fixed',
           bottom: 0,
-          width: "100%"
+          width: "100%",
+          border: "0.5px",
+          borderStyle: "ridge",
+          borderColor: "#858585"
         }}
           onChange={(event, newValue) => {
             switch (newValue) {
@@ -76,7 +121,7 @@ class Listings extends Component {
             }
           }}>
           
-            <BottomNavigationAction label="Agregar" icon={<Link to="/create"><AddIcon color="primary" value="add" /></Link>} />
+          <BottomNavigationAction label="Agregar" icon={<Link to="/create"><AddIcon color="primary" value="add" /></Link>} />
           <BottomNavigationAction
             label="Eliminar"
             icon={isDeleting ?
@@ -85,6 +130,7 @@ class Listings extends Component {
           />
 
         </BottomNavigation>
+        
       </div>
     );
   }

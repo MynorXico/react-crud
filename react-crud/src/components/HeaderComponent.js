@@ -160,7 +160,7 @@ export default function PrimarySearchAppBar({ sheets }) {
           </Link>
           <Link to="/" style={{ textDecoration: 'none' }}>
             <Typography className={classes.title} variant="h6" noWrap style={{flex: 1}}>
-              Music Sheet Catalog
+              Your Musical Repertoire
           </Typography>
           </Link>
           {/* <div className={classes.search}>
