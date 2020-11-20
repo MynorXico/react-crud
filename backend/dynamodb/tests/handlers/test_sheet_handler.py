@@ -8,10 +8,10 @@ def mock_fetch_sheet(user_id):
         return [sheet_for_valid_user]
     return []
 
-def mock_delete_sheets(sheet_ids):
+def mock_delete_sheets(sheet_ids, user_id):
     return []
 
-def mock_update_sheet(sheet_ids):
+def mock_update_sheet(user_id):
     return []
 
 global mocked_model
@@ -96,7 +96,7 @@ def test_delete_400_on_not_ids2delete():
 
 def test_delete_200_on_delete():
     sheet_handler.sheet_model.delete = Mock(wraps=mock_delete_sheets) 
-    assert sheet_handler.delete({'queryStringParameters': {'0':valid_sheet_id}})['statusCode'] == 200
+    assert sheet_handler.delete({'requestContext':{'authorizer': {'claims':{'cognito:username': valid_username}}},'queryStringParameters': {'0':valid_sheet_id}})['statusCode'] == 200
 """
     Update tests
 """
@@ -108,7 +108,7 @@ def test_update_422_on_not_valid_input():
 
 def test_update_200_on_successful_update():
     sheet_handler.sheet_model.update = Mock(wraps=mock_update_sheet) 
-    assert sheet_handler.update({'body': json.dumps(sheet_for_valid_user)})['statusCode'] == 200
+    assert sheet_handler.update({'requestContext': {'authorizer': {'claims': {'cognito:username': valid_username}}},'body': json.dumps(sheet_for_valid_user)})['statusCode'] == 200
 
 """
     Create test

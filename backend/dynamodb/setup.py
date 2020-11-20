@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='dynamodb',
     packages=find_packages(),
-    version='0.1.76',
+    version='0.1.79',
     description='DynamoDB CRUD functions',
     author='Me',
     license='MIT',

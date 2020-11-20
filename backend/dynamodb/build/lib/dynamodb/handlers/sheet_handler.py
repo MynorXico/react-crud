@@ -24,23 +24,19 @@ def fetch(event):
             id = event['multiValueQueryStringParameters']['id'][0]
 
     user_id = event['requestContext']['authorizer']['claims']['cognito:username']
-    try:
-        print("Trying")
-        response = (Models.sheet.get(user_id))
-        print("response: ")
-        print(response)
-        if(id != None):
-            for sheet in response:
-                print("comparing")
-                print(sheet['id'])
-                print(id)
-                if(sheet['id'] == id):
-                    return responseLambda(200, json.dumps(sheet))
-            return responseLambda(404, json.dumps("Not Found: "+str(id)))
-        return responseLambda(200, json.dumps(response))
-    except:
-        raise
-
+    print("Trying")
+    response = (Models.sheet.get(user_id))
+    print("response: ")
+    print(response)
+    if(id != None):
+        for sheet in response:
+            print("comparing")
+            print(sheet['id'])
+            print(id)
+            if(sheet['id'] == id):
+                return responseLambda(200, json.dumps(sheet))
+        return responseLambda(404, json.dumps("Not Found: "+str(id)))
+    return responseLambda(200, json.dumps(response))
 
 def create(event):
     try:
@@ -56,12 +52,8 @@ def create(event):
     print(data)
     sheet_model.set_data(data)
     
-    try:
-        response = (sheet_model.save())
-        return responseLambda(200, event['body'])
-    except:
-        raise
-        #return responseLambda(200, json.dumps(event))
+    sheet_model.save()
+    return responseLambda(200, event['body'])
 
 def update(event):
     if type(event) is not dict:
@@ -80,7 +72,8 @@ def update(event):
     data['date_modified'] = str(datetime.now())
 
     sheet_model.set_data(data)
-
+    user_id = event['requestContext']['authorizer']['claims']['cognito:username']
+    sheet_model.update(user_id)
     return responseLambda(200, event['body'])
 
 def delete(event):
@@ -93,6 +86,7 @@ def delete(event):
     params = (event['queryStringParameters'])
 
     ids = []
+    user_id = event['requestContext']['authorizer']['claims']['cognito:username']
 
     for item in params:
         print("params")
@@ -100,7 +94,7 @@ def delete(event):
         print(item)
         ids.append(params[item])
 
-    response = sheet_model.delete(ids)
+    response = sheet_model.delete(ids, user_id)
     return responseLambda(200, json.dumps(response))
 # Función genérica para HTTP Response
 def responseLambda(statusCode, data):

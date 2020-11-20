@@ -19,11 +19,11 @@ class RedisClient(object):
         try:
             return json.loads(self.r.get(key).decode('ascii'))
         except:
-            try:
-                return self.r.get(key).decode('ascii')
-            except:
-                return None
+            return self.r.get(key).decode('ascii')
     def _set(self, key, value):
         if type(value) == str:
             return self.r.set(key, value, 60)
         return self.r.set(key, json.dumps(value), 60)
+
+    def _delete(self, key):
+        return self.r.delete(key)

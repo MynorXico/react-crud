@@ -24,3 +24,6 @@ class RedisClient(object):
         if type(value) == str:
             return self.r.set(key, value, 60)
         return self.r.set(key, json.dumps(value), 60)
+
+    def _delete(self, key):
+        return self.r.delete(key)

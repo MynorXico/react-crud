@@ -4,11 +4,14 @@ import base64
 class S3Client(object):
     def __init__(self, config):
         self._config = config
-        self.connect()
+        self.connect(config)
 
-    def connect(self):
+    def connect(self, config):
         self._s3 = boto3.resource('s3')
-        self._s3_client = boto3.client('s3')
+        if 's3_client' in config.keys():
+            self._s3_client = config['s3_client']
+        else:
+            self._s3_client = boto3.client('s3')
 
     def save64(self, filename, base64_file):
         print("Config")

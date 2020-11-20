@@ -72,7 +72,8 @@ def update(event):
     data['date_modified'] = str(datetime.now())
 
     sheet_model.set_data(data)
-
+    user_id = event['requestContext']['authorizer']['claims']['cognito:username']
+    sheet_model.update(user_id)
     return responseLambda(200, event['body'])
 
 def delete(event):
@@ -85,6 +86,7 @@ def delete(event):
     params = (event['queryStringParameters'])
 
     ids = []
+    user_id = event['requestContext']['authorizer']['claims']['cognito:username']
 
     for item in params:
         print("params")
@@ -92,7 +94,7 @@ def delete(event):
         print(item)
         ids.append(params[item])
 
-    response = sheet_model.delete(ids)
+    response = sheet_model.delete(ids, user_id)
     return responseLambda(200, json.dumps(response))
 # Función genérica para HTTP Response
 def responseLambda(statusCode, data):

@@ -38,7 +38,21 @@ sheet_with_all_fields = {
     'date_modified': valid_sheet_date_modified,
     'signature': valid_sheet_signature,
     'href': valid_sheet_href,
-    'tempo': valid_sheet_tempo
+    'tempo': {}
+}
+
+sheet_with_all_invalid_fields = {
+    'id': valid_sheet_id,
+    'description': None,
+    'image': None,
+    'composition_date': None,
+    'title': None,
+    'artist': None,
+    'duration': None,
+    'date_modified': None,
+    'signature': None,
+    'href': None,
+    'tempo': None
 }
 
 table_name = 'Sheet'
@@ -139,5 +153,12 @@ def test_get_user_id_items():
 def test_get_not_string_id():
     client = init_table()
     response = client.get(table_name, empty_dict)
+    assert response == False
+
+
+@mock_dynamodb2
+def test_delete_not_valid_id():
+    client = init_table()
+    response = client.delete_item(table_name, None)
     assert response == False
 

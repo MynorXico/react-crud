@@ -36,6 +36,7 @@ class Sheet(object):
         }
         print("dynamodb/models/sheet.py#set_data - Set data")
         print(self._data)
+        return self._data
 
     def save(self):
         filename = "pdf/%s.pdf"%str(uuid.uuid1())
@@ -52,11 +53,20 @@ class Sheet(object):
         image_url = self._s3_client.save64(filename, image_base64)
         self._data['image'] = image_url
         
+        # Limpiar cache de usuario para que se refresque
+        self._redis_client._delete(self._data['user_id'])
+
         # Guardar registro en base de datos
         return self._db_client.insert('Sheet', self._data)
 
-    def update(self):
+    def update(self, user_id):
+        # Limpiar cache de usuario para que se refresque
+        self._redis_client._delete(user_id)
+        
         return self._db_client.update('Sheet', self._data)
 
-    def delete(self, ids):
+    def delete(self, ids, user_id):
+        # Limpiar cache de usuario para que se refresque
+        self._redis_client._delete(user_id)
+
         return self._db_client.delete_items('Sheet', ids)

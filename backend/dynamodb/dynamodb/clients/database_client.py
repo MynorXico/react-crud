@@ -33,12 +33,10 @@ class DatabaseClient(object):
         response = table.put_item(Item=data)
         print("After inserting")
         print(response)
-        if 'ResponseMetadata' not in response.keys():
-            return False
         
         if(response['ResponseMetadata']['HTTPStatusCode'] == 200):
             return data
-        return False
+
     def update(self, table_name, data):
         if type(data) is not dict:
             return False
@@ -47,39 +45,32 @@ class DatabaseClient(object):
 
         table = self.dynamodb.Table(table_name)
         sheet = data
-        try:
-            response = table.update_item(
-                Key={
-                    'id':sheet['id']
-                },
-                UpdateExpression="set description=:description,image=:image,composition_date=:composition_date,title=:title,artist=:artist,#dur_keyword=:dur,date_modified=:date_modified,signature=:signature,href=:href,tempo=:tempo",
-                ExpressionAttributeValues={
-                    ':description': sheet['description'],
-                    ':image': sheet['image'],
-                    ':composition_date': sheet['composition_date'],
-                    ':title': sheet['title'],
-                    ':artist': sheet['artist'],
-                    ':dur': sheet['duration'],
-                    ':date_modified': sheet['date_modified'],
-                    ':signature': sheet['signature'],
-                    ':href': sheet['href'],
-                    ':tempo': sheet['tempo']
-                },
-                ExpressionAttributeNames={
-                    '#dur_keyword': 'duration'
-                },
-                ReturnValues="UPDATED_NEW"
-            )
-        except ValueError:
-            print("dynamodb/clients/database_client#update - DynamoDB Failed at inserting %s"%data['id'])
-            return False
-        if 'ResponseMetadata' not in response.keys():
-            print("dynamodb/clients/database_client#update - DynamoDB Failed at inserting %s"%data['id'])
-            return False
+        response = table.update_item(
+            Key={
+                'id':sheet['id']
+            },
+            UpdateExpression="set description=:description,image=:image,composition_date=:composition_date,title=:title,artist=:artist,#dur_keyword=:dur,date_modified=:date_modified,signature=:signature,href=:href,tempo=:tempo",
+            ExpressionAttributeValues={
+                ':description': sheet['description'],
+                ':image': sheet['image'],
+                ':composition_date': sheet['composition_date'],
+                ':title': sheet['title'],
+                ':artist': sheet['artist'],
+                ':dur': sheet['duration'],
+                ':date_modified': sheet['date_modified'],
+                ':signature': sheet['signature'],
+                ':href': sheet['href'],
+                ':tempo': sheet['tempo']
+            },
+            ExpressionAttributeNames={
+                '#dur_keyword': 'duration'
+            },
+            ReturnValues="UPDATED_NEW"
+        )
+
         
         if(response['ResponseMetadata']['HTTPStatusCode'] == 200):
             return data
-        return False
 
     def get(self, table_name, id):
         if type(id) is not str:
@@ -112,16 +103,10 @@ class DatabaseClient(object):
             return False
         table = self.dynamodb.Table(table_name)
         response = False
-        try:
-            response = table.delete_item(
-                Key = {
-                    'id': id
-                }
-            )
-        except ClientError as e:
-            print("Error: ")
-            print(e)
-            return False
-        else:
-            if(response['ResponseMetadata']['HTTPStatusCode'] == 200):
-                return True
+        response = table.delete_item(
+            Key = {
+                'id': id
+            }
+        )
+        if(response['ResponseMetadata']['HTTPStatusCode'] == 200):
+            return True
