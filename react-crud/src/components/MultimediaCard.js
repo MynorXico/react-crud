@@ -24,6 +24,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from "react-router";
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
+import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import { withStyles } from "@material-ui/core/styles";
+
 import {
   BrowserView,
   MobileView,
@@ -31,6 +34,14 @@ import {
   isMobile
 } from "react-device-detect";
 import { FacebookShareButton, FacebookIcon } from "react-share";
+
+const WhiteTextTypography = withStyles({
+  root: {
+    color: "#FFFFFF"
+  }
+})(Typography);
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,36 +124,61 @@ export default function Multimedia({ item, handleCheck }) {
         subheader={item.date_added}
       />
       <CardContent style={{padding: 0}}>
-      <div style={{
-        width: "100%",
-        alignItems: "center",
-        textAlign: "center"
-      }}>
-        <div style={{display: 'inline-block'}}>
-        <Document file={{ url: item.image}} onLoadSuccess={onDocumentLoadSuccess}
+        <Flippy
+          flipOnHover={true} // default false
+          flipOnClick={false} // default false
         >
-          <BrowserView>
-            <Page pageNumber={pageNumber} width="500" height="500" scale={0.8} />
-          </BrowserView>
-          <MobileView>
-            <Page pageNumber={pageNumber} width="500" height="500" scale={0.61} />
-          </MobileView>
-        </Document>
-        <div>
-        <p style={{margin: 0}}>
-          Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
-        </p>
-        <IconButton style={{paddingTop: 0, paddingBottom: 0}} color="primary" onClick={previousPage}>
-          <ArrowLeftIcon></ArrowLeftIcon>
-        </IconButton>
-        <IconButton style={{paddingTop: 0, paddingBottom: 0}} color="primary" onClick={nextPage}>
-          <ArrowRightIcon></ArrowRightIcon>
-        </IconButton>
+          <FrontSide>
+        <div style={{
+          width: "100%",
+          alignItems: "center",
+          textAlign: "center"
+        }}>
+          <div style={{display: 'inline-block'}}>
+          <Document file={{ url: item.image}} onLoadSuccess={onDocumentLoadSuccess}
+          >
+            <BrowserView>
+              <Page pageNumber={pageNumber} width="500" height="500" scale={0.8} />
+            </BrowserView>
+            <MobileView>
+              <Page pageNumber={pageNumber} width="500" height="500" scale={0.61} />
+            </MobileView>
+          </Document>
+          
         </div>
-      </div>
-      </div>
-      
-        
+        </div>
+        </FrontSide>
+        <BackSide
+          style={{ backgroundColor: '#41669d' }}>
+
+          <WhiteTextTypography variant="body2" color="white" component="p">
+            <b>Composition date: </b> {item.composition_date}
+          </WhiteTextTypography>
+          <WhiteTextTypography variant="body2" color="white" component="p">
+            <b>Composer</b> {item.artist}
+          </WhiteTextTypography>
+          <WhiteTextTypography variant="body2" color="white" component="p">
+          <b>Signature</b> {item.signature}
+          </WhiteTextTypography>
+          <WhiteTextTypography variant="body2" color="white" component="p">
+          <b>Tempo</b> {item.tempo}
+          </WhiteTextTypography>
+          <WhiteTextTypography variant="body2" color="white" component="p">
+            <b>Descripción</b>{item.description}
+          </WhiteTextTypography>
+        </BackSide>
+      </Flippy>
+      <div>
+          <p style={{margin: 0}}>
+            Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
+          </p>
+          <IconButton style={{paddingTop: 0, paddingBottom: 0}} color="primary" onClick={previousPage}>
+            <ArrowLeftIcon></ArrowLeftIcon>
+          </IconButton>
+          <IconButton style={{paddingTop: 0, paddingBottom: 0}} color="primary" onClick={nextPage}>
+            <ArrowRightIcon></ArrowRightIcon>
+          </IconButton>
+          </div>
       </CardContent>
       <CardActions disableSpacing>
         {/* <IconButton aria-label="share">
@@ -186,22 +222,7 @@ export default function Multimedia({ item, handleCheck }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {item.description}
-        </Typography>
-       
-        <Typography variant="body2" color="textSecondary" component="p">
-          <b>Composition date: </b> {item.composition_date}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          <b>Composer</b> {item.artist}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-        <b>Signature</b> {item.signature}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-        <b>Tempo</b> {item.tempo}
-        </Typography>
+
         </CardContent>
       </Collapse>
     </Card>
