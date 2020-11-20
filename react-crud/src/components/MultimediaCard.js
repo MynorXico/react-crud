@@ -37,7 +37,8 @@ import { FacebookShareButton, FacebookIcon } from "react-share";
 
 const WhiteTextTypography = withStyles({
   root: {
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    fontSize: 16
   }
 })(Typography);
 
@@ -121,7 +122,7 @@ export default function Multimedia({ item, handleCheck }) {
           </IconButton>
         }
         title={item.title}
-        subheader={item.date_added}
+        subheader={(new Date(item.date_added)).toDateString()}
       />
       <CardContent style={{padding: 0}}>
         <Flippy
@@ -149,22 +150,24 @@ export default function Multimedia({ item, handleCheck }) {
         </div>
         </FrontSide>
         <BackSide
-          style={{ backgroundColor: '#41669d' }}>
-
+          style={{ backgroundColor: '#41669d', alignItems: "center" }}>
           <WhiteTextTypography variant="body2" color="white" component="p">
-            <b>Composition date: </b> {item.composition_date}
+            <b>Title: </b> {(new Date(item.title)).toDateString()}
           </WhiteTextTypography>
           <WhiteTextTypography variant="body2" color="white" component="p">
-            <b>Composer</b> {item.artist}
+            <b>Composition date: </b> {(new Date(item.composition_date)).toDateString()}
           </WhiteTextTypography>
           <WhiteTextTypography variant="body2" color="white" component="p">
-          <b>Signature</b> {item.signature}
+            <b>Composer: </b> {item.artist}
           </WhiteTextTypography>
           <WhiteTextTypography variant="body2" color="white" component="p">
-          <b>Tempo</b> {item.tempo}
+          <b>Signature: </b> {item.signature}
           </WhiteTextTypography>
           <WhiteTextTypography variant="body2" color="white" component="p">
-            <b>Descripción</b>{item.description}
+          <b>Tempo: </b> {item.tempo}
+          </WhiteTextTypography>
+          <WhiteTextTypography variant="body2" color="white" component="p">
+            <b>Descripción: </b>{item.description}
           </WhiteTextTypography>
         </BackSide>
       </Flippy>
@@ -187,13 +190,7 @@ export default function Multimedia({ item, handleCheck }) {
         <div>
         
 
-        <Checkbox
-          className={clsx(classes.expand, {
-          })}
-          onClick={() => handleCheck(item)}
-          aria-label="show more"
-          color="primary"
-        ></Checkbox>
+        
         <Link
           to={`edit/${item.id}`}>
           <IconButton
@@ -208,16 +205,13 @@ export default function Multimedia({ item, handleCheck }) {
         </FacebookShareButton>
         </IconButton>
         </div>
-        <IconButton
+        <Checkbox
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
+          onClick={() => handleCheck(item)}
           aria-label="show more"
           color="primary"
-        ><ExpandMoreIcon />
-        </IconButton>
+        ></Checkbox>
 
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
