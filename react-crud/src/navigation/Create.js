@@ -42,6 +42,7 @@ class Create extends Component {
     }
   }
   componentWillMount() {
+    this.firsLoad = true;
     if (this.sheet_id) {
       this.props.sheetActions.fetchSheet(this.sheet_id)
       this.create = false;
@@ -131,7 +132,8 @@ class Create extends Component {
     router.push('/');
   }
   render() {
-    const { isLoading, sheet, isFetching, errors } = this.props;
+    var { isLoading, sheet, isFetching, errors } = this.props;
+    
     return (
       <div className="App">
         {isFetching ? <><LinearProgress color="primary" /></> : null}

@@ -68,11 +68,13 @@ export function createSheet(sheet_data) {
                 type: types.START_CREATING_SHEET
             });
             await SongService.createSheet(sheet_data)
-            .then(response => dispatch({ type: types.FINISH_CREATING_SHEET }))
+            .then(response => {
+                dispatch({ type: types.FINISH_CREATING_SHEET });
+            })
             .catch(err_code => unauthorize(dispatch, err_code))
-        }else{
-            dispatch({type: types.FOUND_ERRORS, errors});
         }
+        dispatch({type: types.FOUND_ERRORS, errors});
+
         
     }
 }
@@ -109,9 +111,9 @@ export function updateSheet(sheet_data, sheet_id){
             await SongService.updateSheet(sheet_data, sheet_id)
                 .then(response => dispatch({type: types.FINISH_UPDATING_SHEET}))
                 .catch(err_code => unauthorize(dispatch, err_code))
-        }else{
-            dispatch({type: types.FOUND_ERRORS, errors});
         }
+        dispatch({type: types.FOUND_ERRORS, errors});
+
         
     }
 }
@@ -124,5 +126,7 @@ export function fetchSheet(sheet_id) {
         await SongService.getSheet(sheet_id)
             .then(sheet => dispatch({ type: types.FINISH_FETCHING_SHEET, sheet }))
             .catch(err_code => unauthorize(dispatch, err_code))
+        dispatch({type: types.FOUND_ERRORS, errors: {}});
+
     }
 }
