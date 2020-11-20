@@ -151,24 +151,33 @@ export default function Multimedia({ item, handleCheck }) {
         </FrontSide>
         <BackSide
           style={{ backgroundColor: '#41669d', alignItems: "center" }}>
-          <WhiteTextTypography variant="body2" color="white" component="p">
-            <b>Title: </b> {(new Date(item.title)).toDateString()}
-          </WhiteTextTypography>
-          <WhiteTextTypography variant="body2" color="white" component="p">
-            <b>Composition date: </b> {(new Date(item.composition_date)).toDateString()}
-          </WhiteTextTypography>
-          <WhiteTextTypography variant="body2" color="white" component="p">
-            <b>Composer: </b> {item.artist}
-          </WhiteTextTypography>
-          <WhiteTextTypography variant="body2" color="white" component="p">
-          <b>Signature: </b> {item.signature}
-          </WhiteTextTypography>
-          <WhiteTextTypography variant="body2" color="white" component="p">
-          <b>Tempo: </b> {item.tempo}
-          </WhiteTextTypography>
-          <WhiteTextTypography variant="body2" color="white" component="p">
-            <b>Descripción: </b>{item.description}
-          </WhiteTextTypography>
+          <div style={{
+            height: "100%",
+            verticalAlign: "middle",
+            alignItems: "center",
+            padding: "10%"
+          }}>
+            <div style={{height: "100%", }}>
+            <WhiteTextTypography variant="body2" color="white" component="p">
+              <b>Title: </b> {item.title}
+            </WhiteTextTypography>
+            <WhiteTextTypography variant="body2" color="white" component="p">
+              <b>Composition date: </b> {(new Date(item.composition_date)).toDateString()}
+            </WhiteTextTypography>
+            <WhiteTextTypography variant="body2" color="white" component="p">
+              <b>Composer: </b> {item.artist}
+            </WhiteTextTypography>
+            <WhiteTextTypography variant="body2" color="white" component="p">
+            <b>Signature: </b> {item.signature}
+            </WhiteTextTypography>
+            <WhiteTextTypography variant="body2" color="white" component="p">
+            <b>Tempo: </b> {item.tempo}
+            </WhiteTextTypography>
+            <WhiteTextTypography variant="body2" color="white" component="p">
+              <b>Descripción: </b>{item.description}
+            </WhiteTextTypography>
+            </div>
+          </div>
         </BackSide>
       </Flippy>
       <div>

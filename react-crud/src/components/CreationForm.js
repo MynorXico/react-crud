@@ -177,7 +177,9 @@ export default function CreationForm({
                 </Document>
                 </div>
             </div>}
-            
+            <p style={{textAlign: "left", paddingLeft: "10%", fontSize: 12}}>* Es posible que tus cambios se vean reflejados 
+             hasta después de un minuto. Esto sucede con fines demostrativos de caché.
+            </p>
             <div style={{ textAlign: "left", width: "80%", paddingLeft: "10%" }}>
                 <Button
                     disabled={isLoading}

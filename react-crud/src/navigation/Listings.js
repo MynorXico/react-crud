@@ -75,7 +75,7 @@ class Listings extends Component {
     return (
       <div className="App">
         {isFetching ? <><LinearProgress color="primary" /></> : null}
-        {sheets.length == 0 && 
+        {sheets.length == 0 && !isFetching && 
         <>
           <BrowserView>
             <img style={{padding: 30, height: "80%"}} src="nota-musical.png" ></img>
